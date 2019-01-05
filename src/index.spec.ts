@@ -4,6 +4,7 @@ const key1 = 'myKey1'
 const value1 = 'myValue1'
 const key2 = 'myKey2'
 const value2 = 'myValue2'
+const key3 = 'myKey3'
 
 describe('getQueryParamsFromString', () => {
   it('should return array of key and value for one param', () => {
@@ -27,6 +28,20 @@ describe('getQueryParamsFromString', () => {
     const actualResult = getQueryParamsFromString('')
 
     expect(actualResult).toEqual(null)
+  })
+
+  it('should handle missing value', () => {
+    const paramString = `${key1}=&${key2}=${value2}&${key3}=`
+
+    const actualResult = getQueryParamsFromString(paramString)
+
+    const expectedResult = [
+      {key: key1, value: null},
+      {key: key2, value: value2},
+      {key: key3, value: null},
+    ]
+
+    expect(actualResult).toEqual(expectedResult)
   })
 
 })
