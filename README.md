@@ -12,4 +12,5 @@ We have an existing function with unit tests that extracts query params from a s
 
 ## Branches
 Solution from article in branch 'article-solution'
+
 My solution in branch 'my-solution'
