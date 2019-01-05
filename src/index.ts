@@ -8,7 +8,7 @@ export function getQueryParamsFromString (paramString: string) {
   for (let param of params) {
     let separatorIndex = param.indexOf('=')
     if (separatorIndex == -1) {
-      paramsKeyValues.push({firstPart: param, secondPart: null})
+      paramsKeyValues.push({key: param, value: null})
     } else {
       let part1 = param.substr(0, separatorIndex)
       let part2 = param.substr(separatorIndex + 1)
