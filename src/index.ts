@@ -17,9 +17,9 @@ const pairToQueryParam = (arr: string[]) => ({key: arr[0], value: arr[1]})
 
 const paramStringToQueryParam = (paramString: string): QueryParam => pairToQueryParam(splitToPairByEquals(paramString))
 
-const map = <T> (arr: Array<T>, fn: (value: T) => any) : Array<any> => arr.map(fn)
+const extractParams = (paramString: string) => splitByAmpersand(paramString).map(paramStringToQueryParam)
 
-const extractParams = (paramString: string) => map(splitByAmpersand(paramString), paramStringToQueryParam)
+
 
 export const getQueryParamsFromString =
   (paramString: string): QueryParams => paramString ? extractParams(paramString) : null
