@@ -10,16 +10,16 @@ const splitString = (splitter: string) => (str: string) => str.split(splitter)
 
 const splitByAmpersand = (paramString: string): string[] => splitString('&')(paramString)
 
-const splitByEquals = (paramString: string): string[] => splitString('=')(paramString)
+const splitToPairByEquals = (paramString: string): string[] =>
+  paramString.includes('=') ? splitString('=')(paramString) : [paramString, null]
 
-const pairToQueryParam = (arr: string[]) => ({key: arr[0], value: arr[1] ? arr[1] : null })
+const pairToQueryParam = (arr: string[]) => ({key: arr[0], value: arr[1]})
 
-const splitToPair = (paramString: string): QueryParam => pairToQueryParam(splitByEquals(paramString))
+const paramStringToQueryParam = (paramString: string): QueryParam => pairToQueryParam(splitToPairByEquals(paramString))
 
 const map = <T> (arr: Array<T>, fn: (value: T) => any) : Array<any> => arr.map(fn)
 
-const extractParams = (paramString: string) => map(splitByAmpersand(paramString), splitToPair)
-
+const extractParams = (paramString: string) => map(splitByAmpersand(paramString), paramStringToQueryParam)
 
 export const getQueryParamsFromString =
   (paramString: string): QueryParams => paramString ? extractParams(paramString) : null
