@@ -1,19 +1,11 @@
 export function getQueryParamsFromString (paramString: string) {
-  if (!paramString) {
-    return null
-  }
+  return paramString ? splitString(paramString, '&').map(param => splitToPair(param, '=')) : null
+}
 
-  let paramsKeyValues = []
-  let params = paramString.split('&')
-  for (let param of params) {
-    let separatorIndex = param.indexOf('=')
-    if (separatorIndex == -1) {
-      paramsKeyValues.push({firstPart: param, secondPart: null})
-    } else {
-      let part1 = param.substr(0, separatorIndex)
-      let part2 = param.substr(separatorIndex + 1)
-      paramsKeyValues.push({key: part1, value: part2})
-    }
-  }
-  return paramsKeyValues
+const splitString = (str, splitor) => str.split(splitor)
+const indexOfSeparator = (str, separator) => str.indexOf(separator)
+
+function splitToPair (paramString: string, separator: string) {
+  const [a, b] = splitString(paramString, separator)
+  return {key: a, value: b}
 }
